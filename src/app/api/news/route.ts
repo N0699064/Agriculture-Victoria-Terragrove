@@ -2,69 +2,47 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    console.log('🔄 Fetching latest 3 Nigerian agriculture news...')
+    console.log('🔄 Fetching latest Nigerian agriculture news...')
     
-    // Direct RSS to JSON approach (avoiding internal fetch calls)
-    const rssFeeds = [
-      {
-        url: 'https://businessday.ng/category/agriculture/feed/',
-        name: 'BusinessDay Agriculture'
-      },
-      {
-        url: 'https://guardian.ng/category/features/agric/feed/',
-        name: 'Guardian Nigeria Agriculture'
-      },
-      {
-        url: 'https://punchng.com/topics/agriculture/feed/',
-        name: 'Punch Agriculture'
-      }
-    ]
+    // Try to get live news from BusinessDay RSS
+    try {
+      const rssUrl = 'https://businessday.ng/category/agriculture/feed/'
+      const rssToJsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&count=8`
+      
+      const response = await fetch(rssToJsonUrl, {
+        method: 'GET',
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; Victoria-Terragrove/1.0)',
+        },
+      })
 
-    for (const feed of rssFeeds) {
-      try {
-        console.log(`🔄 Trying ${feed.name}...`)
+      if (response.ok) {
+        const data = await response.json()
+        console.log('RSS Response:', data.status, 'Items:', data.items?.length || 0)
         
-        const rssToJsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=6`
-        
-        const response = await fetch(rssToJsonUrl, {
-          method: 'GET',
-          headers: {
-            'User-Agent': 'Victoria-Terragrove-News/1.0',
-            'Accept': 'application/json'
-          }
-        })
-
-        if (response.ok) {
-          const data = await response.json()
-          console.log(`RSS Response for ${feed.name}:`, data.status, data.items?.length || 0, 'items')
+        if (data.status === 'ok' && data.items && data.items.length > 0) {
+          console.log('✅ SUCCESS! Got LIVE articles from BusinessDay Agriculture')
           
-          if (data.status === 'ok' && data.items && data.items.length > 0) {
-            console.log(`✅ SUCCESS! Got ${data.items.length} live articles from ${feed.name}`)
-            
-            // Get latest articles and add more detailed content
-            const articles = data.items.slice(0, 6).map((item: any) => ({
-              title: cleanTitle(item.title),
-              description: cleanDescription(item.description || item.content),
-              url: item.link || item.guid || '#',
-              urlToImage: extractImage(item) || getDefaultImage(),
-              publishedAt: item.pubDate || new Date().toISOString(),
-              source: { name: feed.name }
-            }))
+          const liveArticles = data.items.slice(0, 8).map((item: any) => ({
+            title: cleanTitle(item.title),
+            description: cleanDescription(item.description || item.content),
+            url: item.link || item.guid || '/news',
+            urlToImage: extractImage(item) || getDefaultImage(),
+            publishedAt: item.pubDate || new Date().toISOString(),
+            source: { name: 'BusinessDay Agriculture' }
+          }))
 
-            return NextResponse.json({
-              articles,
-              source: 'live-rss',
-              timestamp: new Date().toISOString(),
-              feed_name: feed.name,
-              total_articles: articles.length
-            })
-          }
+          return NextResponse.json({
+            articles: liveArticles,
+            source: 'live-businessday',
+            timestamp: new Date().toISOString(),
+            message: 'Live Nigerian agriculture news from BusinessDay',
+            total_articles: liveArticles.length
+          })
         }
-      } catch (feedError) {
-        console.log(`❌ ${feed.name} failed:`, feedError.message)
-        console.log(`URL attempted: ${rssToJsonUrl}`)
-        continue
       }
+    } catch (rssError) {
+      console.log('❌ RSS fetch failed:', rssError.message)
     }
 
     // Return latest 3 fallback articles for carousel
