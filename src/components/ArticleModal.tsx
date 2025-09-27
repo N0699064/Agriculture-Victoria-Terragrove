@@ -62,28 +62,95 @@ const ArticleModal: React.FC<ArticleModalProps> = ({ article, isOpen, onClose })
   }
 
   const generateFullContent = (article: NewsArticle) => {
-    // Generate expanded content based on the article
+    // Use the full description as base content
     const baseContent = article.description
     
-    // Add more detailed content sections
-    const additionalSections = [
-      {
-        title: "Key Highlights",
-        content: `This development in Nigeria's agricultural sector represents a significant step forward in modernizing farming practices. The initiative focuses on sustainable growth, technology adoption, and community empowerment.`
-      },
-      {
-        title: "Impact on Farmers",
-        content: `Local farmers are expected to benefit greatly from these developments. The program includes training sessions, access to modern equipment, and improved market linkages that will enhance their productivity and income.`
-      },
-      {
-        title: "Government Support",
-        content: `The federal and state governments have shown strong commitment to supporting agricultural transformation through policy reforms, funding allocations, and infrastructure development across key agricultural zones.`
-      },
-      {
-        title: "Future Outlook",
-        content: `Industry experts predict continued growth in this sector, with potential for increased exports, job creation, and food security improvements. The sustainable practices being implemented will also contribute to environmental conservation.`
-      }
-    ]
+    // Generate contextual content based on article title and content
+    const isAboutRice = article.title.toLowerCase().includes('rice') || article.description.toLowerCase().includes('rice')
+    const isAboutCocoa = article.title.toLowerCase().includes('cocoa') || article.description.toLowerCase().includes('cocoa')
+    const isAboutTechnology = article.title.toLowerCase().includes('digital') || article.title.toLowerCase().includes('technology')
+    const isAboutYouth = article.title.toLowerCase().includes('youth') || article.description.toLowerCase().includes('young')
+    const isAboutGovernment = article.title.toLowerCase().includes('lagos') || article.title.toLowerCase().includes('government')
+    
+    let additionalSections = []
+    
+    if (isAboutRice) {
+      additionalSections = [
+        {
+          title: "Rice Production Impact",
+          content: `Nigeria's rice sector has seen remarkable transformation with the Anchor Borrowers Programme supporting over 100,000 farmers. Local production now meets 70% of domestic demand, reducing import dependency significantly.`
+        },
+        {
+          title: "Key Growing Regions",
+          content: `Major rice-producing states including Kebbi, Sokoto, Niger, and Kano have reported record harvests. Modern irrigation systems and improved seedlings contribute to yields averaging 6-8 tons per hectare.`
+        },
+        {
+          title: "Market Opportunities",
+          content: `With growing demand from Nigeria's 220 million population, rice farming presents excellent investment opportunities. Processing facilities and value chain development offer additional revenue streams.`
+        }
+      ]
+    } else if (isAboutCocoa) {
+      additionalSections = [
+        {
+          title: "Cocoa Industry Overview",
+          content: `Nigeria ranks as the world's 4th largest cocoa producer, with Southwest states of Ondo, Osun, Oyo, and Cross River leading production. Premium quality Nigerian cocoa commands excellent prices in international markets.`
+        },
+        {
+          title: "Sustainable Practices",
+          content: `Farmers are adopting shade-grown cocoa systems, organic certification, and fair trade practices. These sustainable methods not only protect the environment but also secure premium market access.`
+        },
+        {
+          title: "Technology Integration",
+          content: `Mobile apps for weather forecasting, pest management, and market price tracking are transforming cocoa farming. Digital tools help farmers optimize harvest timing and quality control.`
+        }
+      ]
+    } else if (isAboutTechnology) {
+      additionalSections = [
+        {
+          title: "Digital Agriculture Revolution",
+          content: `Nigerian farmers are embracing precision agriculture with GPS-guided tractors, drone surveillance, and IoT soil sensors. These technologies optimize resource use and maximize yields.`
+        },
+        {
+          title: "Mobile Solutions",
+          content: `Agricultural apps provide real-time weather data, market prices, and expert advice. Mobile money platforms enable easy access to credit and insurance for smallholder farmers.`
+        },
+        {
+          title: "Future Technologies",
+          content: `Emerging technologies like AI-powered crop monitoring, blockchain for supply chain transparency, and satellite imagery for farm management are being piloted across Nigeria.`
+        }
+      ]
+    } else if (isAboutGovernment) {
+      additionalSections = [
+        {
+          title: "Government Initiatives",
+          content: `Federal and state governments have launched comprehensive agricultural transformation programs with funding, infrastructure development, and policy reforms to support modern farming.`
+        },
+        {
+          title: "Investment Support",
+          content: `The Central Bank's agricultural financing schemes provide low-interest loans to farmers and agribusiness enterprises. Special economic zones offer tax incentives for agricultural investments.`
+        },
+        {
+          title: "Infrastructure Development",
+          content: `Ongoing projects include rural road networks, irrigation systems, storage facilities, and processing centers to reduce post-harvest losses and improve market access.`
+        }
+      ]
+    } else {
+      // Generic agricultural content
+      additionalSections = [
+        {
+          title: "Agricultural Sector Impact",
+          content: `Nigeria's agricultural sector contributes 22% to GDP and employs over 70% of the rural population. Continued modernization and investment are crucial for food security and economic growth.`
+        },
+        {
+          title: "Investment Opportunities",
+          content: `The sector offers diverse investment options from crop production to agro-processing, livestock farming, and agricultural technology. Returns typically range from 15-30% annually.`
+        },
+        {
+          title: "Market Outlook",
+          content: `With Africa's largest population and growing middle class, Nigeria presents enormous market opportunities for agricultural products and value-added processing.`
+        }
+      ]
+    }
 
     return { baseContent, additionalSections }
   }
