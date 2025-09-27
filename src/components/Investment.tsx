@@ -56,11 +56,15 @@ const Investment = () => {
   ];
 
   return (
-    <section id="investment" className="section-padding relative bg-gradient-to-br from-stone-50 via-emerald-50/30 to-amber-50/40 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-20" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.06'%3E%3Cpath d='M40 0c22.091 0 40 17.909 40 40s-17.909 40-40 40S0 62.091 0 40 17.909 0 40 0zm0 8c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32S57.673 8 40 8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+    <section id="investment" className="section-padding relative bg-gradient-to-br from-stone-100 via-emerald-100/60 to-amber-100/50 overflow-hidden">
+      {/* Enhanced Background Layers */}
+      <div className="absolute inset-0 bg-gradient-to-t from-emerald-600/5 via-transparent to-amber-600/8"></div>
+      <div className="absolute inset-0 opacity-30" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.1'%3E%3Cpath d='M50 0c27.614 0 50 22.386 50 50s-22.386 50-50 50S0 72.614 0 50 22.386 0 50 0zm0 10c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40S72.091 10 50 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
       }}></div>
+      {/* Floating background elements */}
+      <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-radial from-emerald-400/15 to-transparent rounded-full"></div>
+      <div className="absolute bottom-20 right-10 w-56 h-56 bg-gradient-radial from-amber-400/20 to-transparent rounded-full"></div>
       <div className="container">
         {/* Header */}
         <motion.div
