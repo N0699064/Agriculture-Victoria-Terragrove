@@ -39,13 +39,13 @@ export async function GET() {
           console.log(`RSS Response for ${feed.name}:`, data.status, data.items?.length || 0, 'items')
           
           if (data.status === 'ok' && data.items && data.items.length > 0) {
-            console.log(`✅ Success! Got ${data.items.length} articles from ${feed.name}`)
+            console.log(`✅ SUCCESS! Got ${data.items.length} live articles from ${feed.name}`)
             
             // Get latest articles and add more detailed content
             const articles = data.items.slice(0, 6).map((item: any) => ({
               title: cleanTitle(item.title),
               description: cleanDescription(item.description || item.content),
-              url: item.link || '#',
+              url: item.link || item.guid || '#',
               urlToImage: extractImage(item) || getDefaultImage(),
               publishedAt: item.pubDate || new Date().toISOString(),
               source: { name: feed.name }
