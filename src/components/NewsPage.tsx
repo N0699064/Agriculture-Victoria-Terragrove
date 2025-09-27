@@ -24,13 +24,26 @@ const NewsPage = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('/api/news')
+      console.log('Fetching news from /api/news...')
+      
+      const response = await fetch('/api/news', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      
+      console.log('Response status:', response.status)
+      console.log('Response ok:', response.ok)
       
       if (!response.ok) {
-        throw new Error('Failed to fetch news')
+        const errorText = await response.text()
+        console.error('API Error:', errorText)
+        throw new Error(`API returned ${response.status}: ${errorText}`)
       }
       
       const data = await response.json()
+      console.log('Data received:', data)
       
       // Add summaries and expand with more demo articles
       const articlesWithSummaries = [
