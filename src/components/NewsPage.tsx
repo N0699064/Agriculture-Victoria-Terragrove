@@ -402,6 +402,13 @@ const NewsPage = () => {
           </div>
         )}
       </div>
+
+      {/* Article Modal */}
+      <ArticleModal
+        article={selectedArticle}
+        isOpen={isModalOpen}
+        onClose={closeArticleModal}
+      />
     </div>
   )
 }
