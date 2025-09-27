@@ -27,13 +27,13 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900/5 via-transparent to-emerald-900/8"></div>
       </div>
 
-      {/* Enhanced Floating elements with glass morphism */}
+      {/* Dynamic Floating elements with enhanced visual impact */}
       <motion.div
-        className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-emerald-400/40 to-green-600/30 rounded-full blur-2xl backdrop-blur-sm"
+        className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-emerald-500/50 to-green-700/40 rounded-full blur-2xl shadow-2xl"
         animate={{
-          y: [0, -30, 0],
-          x: [0, 15, 0],
-          scale: [1, 1.1, 1],
+          y: [0, -40, 0],
+          x: [0, 20, 0],
+          scale: [1, 1.2, 1],
         }}
         transition={{
           duration: 8,
@@ -42,11 +42,11 @@ const Hero = () => {
         }}
       />
       <motion.div
-        className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-amber-400/30 to-orange-500/20 rounded-full blur-xl backdrop-blur-sm"
+        className="absolute top-32 right-16 w-32 h-32 bg-gradient-to-br from-amber-500/40 to-orange-600/30 rounded-full blur-2xl shadow-xl"
         animate={{
-          y: [0, 25, 0],
-          x: [0, -20, 0],
-          scale: [1, 0.9, 1],
+          y: [0, 30, 0],
+          x: [0, -25, 0],
+          scale: [1, 0.8, 1],
         }}
         transition={{
           duration: 12,
@@ -55,10 +55,10 @@ const Hero = () => {
         }}
       />
       <motion.div
-        className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-emerald-300/25 to-green-500/15 rounded-full blur-3xl backdrop-blur-sm"
+        className="absolute bottom-32 right-20 w-48 h-48 bg-gradient-to-br from-emerald-400/35 to-green-600/25 rounded-full blur-3xl shadow-2xl"
         animate={{
-          y: [0, 20, 0],
-          x: [0, -15, 0],
+          y: [0, 25, 0],
+          x: [0, -20, 0],
           rotate: [0, 180, 360],
         }}
         transition={{
@@ -68,14 +68,39 @@ const Hero = () => {
         }}
       />
       <motion.div
-        className="absolute bottom-20 left-20 w-28 h-28 bg-gradient-to-br from-yellow-400/20 to-amber-600/15 rounded-full blur-2xl backdrop-blur-sm"
+        className="absolute bottom-16 left-16 w-36 h-36 bg-gradient-to-br from-yellow-500/30 to-amber-700/25 rounded-full blur-2xl shadow-xl"
         animate={{
-          y: [0, -25, 0],
-          x: [0, 10, 0],
-          scale: [1, 1.2, 1],
+          y: [0, -35, 0],
+          x: [0, 15, 0],
+          scale: [1, 1.3, 1],
         }}
         transition={{
           duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      {/* Additional geometric elements for depth */}
+      <motion.div
+        className="absolute top-1/3 left-1/4 w-6 h-6 bg-emerald-500/60 rounded-full shadow-lg"
+        animate={{
+          scale: [1, 1.5, 1],
+          opacity: [0.6, 1, 0.6],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-1/3 right-1/3 w-4 h-4 bg-amber-500/70 rounded-full shadow-md"
+        animate={{
+          scale: [1, 1.3, 1],
+          opacity: [0.7, 1, 0.7],
+        }}
+        transition={{
+          duration: 4,
           repeat: Infinity,
           ease: "easeInOut",
         }}
