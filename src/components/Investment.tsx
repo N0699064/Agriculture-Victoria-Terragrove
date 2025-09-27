@@ -146,10 +146,10 @@ const Investment = () => {
                 <div className="absolute bottom-4 left-4 w-6 h-6 bg-white/50 rounded-full"></div>
                 {/* Status badge positioning */}
                 <div className="absolute top-4 right-4">
-                  <span className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-md border shadow-lg ${
-                    opportunity.status === 'Available' ? 'glass-effect bg-emerald-100/80 text-emerald-900 border-emerald-200/50' :
-                    opportunity.status === 'Limited Slots' ? 'glass-effect bg-amber-100/80 text-amber-900 border-amber-200/50' :
-                    'glass-effect bg-blue-100/80 text-blue-900 border-blue-200/50'
+                  <span className={`px-4 py-2 rounded-full text-xs font-bold border shadow-xl ${
+                    opportunity.status === 'Available' ? 'bg-emerald-500/90 text-white border-emerald-400/50 shadow-emerald-500/30' :
+                    opportunity.status === 'Limited Slots' ? 'bg-amber-500/90 text-white border-amber-400/50 shadow-amber-500/30' :
+                    'bg-blue-500/90 text-white border-blue-400/50 shadow-blue-500/30'
                   }`}>
                     {opportunity.status}
                   </span>
