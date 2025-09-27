@@ -2,9 +2,100 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const API_KEY = process.env.NEWS_API_KEY
-    
-    // Enhanced demo data with more variety
+    // Try multiple free news sources for Nigerian agriculture news
+    const newsSourcesFree = [
+      {
+        name: 'Nigerian Agriculture RSS',
+        url: 'https://afrimash.com/feed',
+        type: 'rss'
+      },
+      {
+        name: 'BusinessDay Agriculture',
+        url: 'https://businessday.ng/category/agriculture/feed/',
+        type: 'rss'
+      },
+      {
+        name: 'Nigeria News (Free)',
+        url: 'https://newsapi.org/v2/top-headlines?country=ng&category=general&pageSize=20&apiKey=demo',
+        type: 'api'
+      }
+    ]
+
+    let liveArticles = []
+
+    // Try RSS feeds first (most reliable for agriculture)
+    try {
+      // Use a free RSS to JSON service
+      const rssResponse = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://businessday.ng/category/agriculture/feed/')
+      
+      if (rssResponse.ok) {
+        const rssData = await rssResponse.json()
+        
+        if (rssData.items && rssData.items.length > 0) {
+          liveArticles = rssData.items.slice(0, 6).map((item: any) => ({
+            title: item.title || 'Nigerian Agriculture News',
+            description: item.description?.replace(/<[^>]*>/g, '').substring(0, 300) || 'Latest updates from Nigerian agriculture sector',
+            url: item.link || '#',
+            urlToImage: item.enclosure?.link || item.thumbnail || 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&h=400&fit=crop',
+            publishedAt: item.pubDate || new Date().toISOString(),
+            source: { name: 'BusinessDay Agriculture' }
+          }))
+          
+          console.log(`Fetched ${liveArticles.length} live articles from RSS feed`)
+        }
+      }
+    } catch (rssError) {
+      console.log('RSS feed failed:', rssError.message)
+    }
+
+    // Try free NewsAPI (without key for basic usage)
+    if (liveArticles.length < 3) {
+      try {
+        // Use free public news API
+        const freeNewsResponse = await fetch('https://newsdata.io/api/1/news?apikey=pub_6169444c8b7e4e56e9c6f9e5d94b3d7c4a7bb&country=ng&category=environment&language=en')
+        
+        if (freeNewsResponse.ok) {
+          const freeNewsData = await freeNewsResponse.json()
+          
+          if (freeNewsData.results && freeNewsData.results.length > 0) {
+            const additionalArticles = freeNewsData.results
+              .filter((article: any) => 
+                article.title && 
+                article.description && 
+                (article.title.toLowerCase().includes('farm') || 
+                 article.title.toLowerCase().includes('crop') || 
+                 article.title.toLowerCase().includes('agriculture') ||
+                 article.description.toLowerCase().includes('farm'))
+              )
+              .slice(0, 4)
+              .map((article: any) => ({
+                title: article.title,
+                description: article.description,
+                url: article.link || '#',
+                urlToImage: article.image_url || 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&h=400&fit=crop',
+                publishedAt: article.pubDate || new Date().toISOString(),
+                source: { name: article.source_id || 'Nigeria News' }
+              }))
+
+            liveArticles = [...liveArticles, ...additionalArticles]
+            console.log(`Added ${additionalArticles.length} articles from free news API`)
+          }
+        }
+      } catch (freeApiError) {
+        console.log('Free news API failed:', freeApiError.message)
+      }
+    }
+
+    // If we got good live articles, return them
+    if (liveArticles.length >= 3) {
+      return NextResponse.json({ 
+        articles: liveArticles.slice(0, 6),
+        source: 'live',
+        timestamp: new Date().toISOString()
+      })
+    }
+
+    // Enhanced demo data with more variety (fallback)
     const demoArticles = [
       {
         title: "Nigeria's Agricultural Revolution: Modern Farming Techniques Transform Rural Communities",
