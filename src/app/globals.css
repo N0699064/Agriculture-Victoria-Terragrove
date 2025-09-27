@@ -124,52 +124,17 @@
   }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
-.font-display {
-  font-family: 'Playfair Display', serif;
+/* Animation Utilities */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-in-out forwards;
 }
 
-.font-body {
-  font-family: 'Inter', sans-serif;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-.parallax {
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.overlay {
-  background: linear-gradient(135deg, rgba(20, 83, 45, 0.8) 0%, rgba(41, 37, 36, 0.6) 100%);
-}
-
-.glass-effect {
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.animate-slide-in {
+  animation: slideIn 0.6s ease-out forwards;
 }
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -183,10 +148,6 @@ html {
   }
 }
 
-.animate-slide-in {
-  animation: slideIn 0.6s ease-out;
-}
-
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -196,4 +157,24 @@ html {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Utility Classes */
+.glass-effect {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.overlay {
+  background: linear-gradient(135deg, rgba(20, 83, 45, 0.8) 0%, rgba(41, 37, 36, 0.6) 100%);
 }
