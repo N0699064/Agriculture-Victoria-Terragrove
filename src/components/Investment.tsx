@@ -127,11 +127,14 @@ const Investment = () => {
           {opportunities.map((opportunity, index) => (
             <motion.div
               key={opportunity.title}
-              className="glass-effect bg-white/90 backdrop-blur-md rounded-3xl overflow-hidden shadow-xl card-hover border border-white/40 hover:border-emerald-200/50 hover:shadow-2xl transition-all duration-500"
+              className="bg-white/95 rounded-3xl overflow-hidden shadow-2xl card-hover border border-emerald-100/60 hover:border-emerald-300/70 hover:shadow-3xl transform transition-all duration-500 hover:scale-105"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
+              style={{
+                boxShadow: '0 20px 40px -12px rgba(16, 185, 129, 0.15), 0 8px 16px -8px rgba(0, 0, 0, 0.1)'
+              }}
             >
               {/* Enhanced Image with glass overlay */}
               <div className="h-56 bg-gradient-to-br from-emerald-200 via-green-100 to-amber-200 relative overflow-hidden">
