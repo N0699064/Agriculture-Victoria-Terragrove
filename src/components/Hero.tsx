@@ -57,10 +57,7 @@ const Hero = () => {
 
           {/* Main Heading */}
           <motion.h1
-            className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-stone-800 mb-6 leading-tight"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-stone-800 mb-6 leading-tight animate-fade-in"
           >
             Transform
             <span className="text-gradient block">
