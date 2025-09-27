@@ -122,13 +122,13 @@ const Hero = () => {
             </motion.button>
             
             <motion.button
-              className="flex items-center space-x-3 text-stone-700 hover:text-green-700 transition-colors duration-200 group"
+              className="flex items-center space-x-3 text-stone-700 hover:text-emerald-700 transition-all duration-300 group"
               whileHover={{ scale: 1.05 }}
             >
-              <div className="w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-200">
-                <Play className="h-5 w-5 ml-0.5" />
+              <div className="w-14 h-14 glass-effect bg-white/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 border border-white/30 group-hover:bg-white/80">
+                <Play className="h-6 w-6 ml-0.5 text-emerald-700" />
               </div>
-              <span className="font-medium">Watch Our Story</span>
+              <span className="font-semibold">Watch Our Story</span>
             </motion.button>
           </motion.div>
 
