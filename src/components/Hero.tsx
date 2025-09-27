@@ -12,16 +12,19 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Enhanced Background with multiple layers */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-100 via-green-50 to-amber-100">
-        {/* Primary Pattern */}
-        <div className="absolute inset-0 opacity-30" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.1'%3E%3Ccircle cx='50' cy='50' r='3'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Ccircle cx='90' cy='90' r='2'/%3E%3Ccircle cx='10' cy='90' r='1.5'/%3E%3Ccircle cx='90' cy='10' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+      {/* Dramatic Background with multiple layers */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-green-400/15 to-amber-400/20">
+        {/* Dynamic mesh gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/10 via-green-500/5 to-yellow-400/10"></div>
+        {/* Enhanced Pattern Overlay */}
+        <div className="absolute inset-0 opacity-40" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.15'%3E%3Ccircle cx='60' cy='60' r='4'/%3E%3Ccircle cx='15' cy='15' r='3'/%3E%3Ccircle cx='105' cy='105' r='3'/%3E%3Ccircle cx='15' cy='105' r='2'/%3E%3Ccircle cx='105' cy='15' r='2'/%3E%3Cpath d='M60 0v120M0 60h120' stroke='%23059669' stroke-opacity='0.05' stroke-width='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
         }}></div>
-        {/* Secondary overlay with subtle gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/5 via-transparent to-amber-900/5"></div>
-        {/* Radial gradient for depth */}
-        <div className="absolute inset-0 bg-radial-gradient from-transparent via-emerald-50/20 to-green-100/10"></div>
+        {/* Organic shapes for visual interest */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-radial from-emerald-400/20 to-transparent rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-radial from-amber-400/25 to-transparent rounded-full transform translate-x-1/3 translate-y-1/3"></div>
+        {/* Sophisticated overlay gradients */}
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/5 via-transparent to-emerald-900/8"></div>
       </div>
 
       {/* Enhanced Floating elements with glass morphism */}
