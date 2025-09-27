@@ -62,6 +62,7 @@ export async function GET() {
         }
       } catch (feedError) {
         console.log(`❌ ${feed.name} failed:`, feedError.message)
+        console.log(`URL attempted: ${rssToJsonUrl}`)
         continue
       }
     }
