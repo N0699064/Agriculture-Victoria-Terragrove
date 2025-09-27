@@ -26,11 +26,34 @@ const Hero = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch('/api/news')
+        console.log('Hero: Fetching news from /api/news...')
+        const response = await fetch('/api/news', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        
+        console.log('Hero: Response status:', response.status)
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`)
+        }
+        
         const data = await response.json()
+        console.log('Hero: Data received:', data)
         setNewsArticles(data.articles || [])
       } catch (error) {
-        console.error('Failed to fetch news:', error)
+        console.error('Hero: Failed to fetch news:', error)
+        // Set fallback articles for hero
+        setNewsArticles([{
+          title: "Nigerian Agriculture News",
+          description: "Stay updated with the latest developments in Nigerian agriculture and farming innovations.",
+          url: "/news",
+          urlToImage: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&h=400&fit=crop",
+          publishedAt: new Date().toISOString(),
+          source: { name: "Agriculture Today" }
+        }])
       } finally {
         setLoading(false)
       }
