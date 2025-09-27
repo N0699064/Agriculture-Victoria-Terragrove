@@ -62,16 +62,37 @@ const Hero = () => {
     fetchNews()
   }, [])
 
-  // Auto-slide functionality
+  // Auto-slide functionality - updates every 4 seconds for latest 3 articles
   useEffect(() => {
     if (newsArticles.length === 0) return
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % newsArticles.length)
-    }, 5000) // Change slide every 5 seconds
+      setCurrentSlide((prev) => (prev + 1) % Math.min(newsArticles.length, 3))
+    }, 4000) // Change slide every 4 seconds
 
     return () => clearInterval(interval)
   }, [newsArticles.length])
+
+  // Auto-refresh news every 2 minutes to get latest articles
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      console.log('🔄 Auto-refreshing news articles...')
+      const fetchNews = async () => {
+        try {
+          const response = await fetch('/api/news')
+          if (response.ok) {
+            const data = await response.json()
+            setNewsArticles(data.articles?.slice(0, 3) || []) // Always get latest 3
+          }
+        } catch (error) {
+          console.log('Auto-refresh failed:', error)
+        }
+      }
+      fetchNews()
+    }, 120000) // Refresh every 2 minutes
+
+    return () => clearInterval(refreshInterval)
+  }, [])
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % newsArticles.length)
