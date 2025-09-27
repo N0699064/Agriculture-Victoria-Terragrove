@@ -84,8 +84,9 @@ const NewsPage = () => {
       setArticles(articlesWithSummaries)
       setFilteredArticles(articlesWithSummaries)
     } catch (err) {
-      setError('Unable to load latest news. Please try again later.')
-      console.error('News fetch error:', err)
+      console.error('News fetch error details:', err)
+      setError(`Unable to load latest news: ${err.message}`)
+      console.error('Full error:', err)
     } finally {
       setLoading(false)
     }
