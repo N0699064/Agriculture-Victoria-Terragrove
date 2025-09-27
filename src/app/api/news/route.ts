@@ -103,37 +103,84 @@ export async function GET() {
     })
 
   } catch (error) {
-    console.error('News API error:', error)
+    console.error('❌ News API error:', error)
     
-    // Fallback demo data
+    // Return fallback articles for carousel
+    const fallbackArticles = [
+      {
+        title: "Nigerian Agriculture: Record Rice Harvest Boosts Food Security",
+        description: "Nigerian farmers celebrate record rice production this season, with yields exceeding expectations across major producing states including Kebbi, Sokoto, and Niger.",
+        url: "#",
+        urlToImage: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&h=400&fit=crop",
+        publishedAt: new Date().toISOString(),
+        source: { name: "Nigeria Agricultural Review" }
+      },
+      {
+        title: "Technology Transforms Nigerian Cocoa Farming",
+        description: "Cocoa farmers in Southwest Nigeria adopt digital tools and sustainable practices, improving crop quality and securing premium market prices for their produce.",
+        url: "#",
+        urlToImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop",
+        publishedAt: new Date(Date.now() - 86400000).toISOString(),
+        source: { name: "Cocoa News Nigeria" }
+      },
+      {
+        title: "Youth Lead Nigeria's Agricultural Innovation Drive",
+        description: "Young entrepreneurs drive agricultural innovation across Nigeria, leveraging modern technology and business practices to transform traditional farming methods.",
+        url: "#",
+        urlToImage: "https://images.unsplash.com/photo-1607082349566-187342175e2f?w=800&h=400&fit=crop",
+        publishedAt: new Date(Date.now() - 172800000).toISOString(),
+        source: { name: "Youth Agribusiness" }
+      }
+    ]
+
     return NextResponse.json({
-      articles: [
-        {
-          title: "Nigeria's Agricultural Revolution: Modern Farming Techniques Transform Rural Communities",
-          description: "Innovative farming methods are revolutionizing agriculture across Nigeria, with new irrigation systems and crop varieties increasing yields by up to 40% in rural communities.",
-          url: "#",
-          urlToImage: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&h=400&fit=crop",
-          publishedAt: new Date().toISOString(),
-          source: { name: "Agriculture Today" }
-        },
-        {
-          title: "Cocoa Farmers in Southwest Nigeria Embrace Sustainable Practices",
-          description: "Farmers in Ogun and Oyo states are implementing sustainable cocoa farming practices, resulting in premium certifications and better market prices for their produce.",
-          url: "#",
-          urlToImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop",
-          publishedAt: new Date(Date.now() - 86400000).toISOString(),
-          source: { name: "Cocoa News Nigeria" }
-        },
-        {
-          title: "Rice Production Surges in Northern Nigeria with Government Support",
-          description: "Federal government initiatives and improved seed varieties have led to record rice production in Kebbi, Sokoto, and Kano states, reducing import dependency.",
-          url: "#",
-          urlToImage: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&h=400&fit=crop",
-          publishedAt: new Date(Date.now() - 172800000).toISOString(),
-          source: { name: "Nigeria Agricultural Review" }
-        }
-      ],
-      source: 'fallback'
+      articles: fallbackArticles,
+      source: 'error-fallback',
+      timestamp: new Date().toISOString(),
+      message: 'Latest 3 Nigerian agriculture news (error fallback)'
     })
   }
+}
+
+// Helper functions
+function cleanTitle(title: string): string {
+  if (!title) return 'Nigerian Agriculture News'
+  return title.replace(/read more.*$/i, '').trim()
+}
+
+function cleanDescription(description: string): string {
+  if (!description) return 'Latest updates from Nigerian agriculture sector'
+  
+  // Remove HTML tags and "read more" links
+  let cleaned = description
+    .replace(/<[^>]*>/g, '')
+    .replace(/read more.*$/i, '')
+    .trim()
+  
+  // Limit length for carousel
+  if (cleaned.length > 200) {
+    cleaned = cleaned.substring(0, 200) + '...'
+  }
+  
+  return cleaned || 'Latest updates from Nigerian agriculture sector'
+}
+
+function extractImage(item: any): string | null {
+  if (item.thumbnail) return item.thumbnail
+  if (item.enclosure?.link) return item.enclosure.link
+  
+  // Try to extract from description
+  const imgMatch = item.description?.match(/src="([^"]+)"/i)
+  if (imgMatch) return imgMatch[1]
+  
+  return null
+}
+
+function getDefaultImage(): string {
+  const images = [
+    'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&h=400&fit=crop',
+    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop',
+    'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&h=400&fit=crop'
+  ]
+  return images[Math.floor(Math.random() * images.length)]
 }
