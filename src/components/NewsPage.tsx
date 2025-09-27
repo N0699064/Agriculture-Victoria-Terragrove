@@ -20,6 +20,18 @@ const NewsPage = () => {
   const [error, setError] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [filteredArticles, setFilteredArticles] = useState<NewsArticle[]>([])
+  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const openArticleModal = (article: NewsArticle) => {
+    setSelectedArticle(article)
+    setIsModalOpen(true)
+  }
+
+  const closeArticleModal = () => {
+    setIsModalOpen(false)
+    setSelectedArticle(null)
+  }
 
   const fetchNews = async () => {
     try {
