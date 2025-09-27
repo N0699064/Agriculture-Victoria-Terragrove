@@ -2,81 +2,68 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    console.log('🔄 Fetching live Nigerian agriculture news...')
+    console.log('🔄 Fetching latest 3 Nigerian agriculture news...')
     
-    // First try to get live news from RSS feeds
-    try {
-      const liveResponse = await fetch(`${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/api/news-live`)
-      
-      if (liveResponse.ok) {
-        const liveData = await liveResponse.json()
+    // Direct RSS to JSON approach (avoiding internal fetch calls)
+    const rssFeeds = [
+      {
+        url: 'https://businessday.ng/category/agriculture/feed/',
+        name: 'BusinessDay Agriculture'
+      },
+      {
+        url: 'https://guardian.ng/category/features/agric/feed/',
+        name: 'Guardian Nigeria Agriculture'
+      },
+      {
+        url: 'https://punchng.com/topics/agriculture/feed/',
+        name: 'Punch Agriculture'
+      }
+    ]
+
+    for (const feed of rssFeeds) {
+      try {
+        console.log(`🔄 Trying ${feed.name}...`)
         
-        if (liveData.articles && liveData.articles.length >= 3) {
-          console.log(`✅ Successfully fetched ${liveData.articles.length} live articles`)
-          return NextResponse.json({
-            articles: liveData.articles,
-            source: 'live-feed',
-            timestamp: new Date().toISOString(),
-            message: 'Live Nigerian agriculture news'
-          })
-        }
-      }
-    } catch (liveError) {
-      console.log('❌ Live feed failed:', liveError.message)
-    }
+        const rssToJsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=5`
+        
+        const response = await fetch(rssToJsonUrl, {
+          method: 'GET',
+          headers: {
+            'User-Agent': 'Victoria-Terragrove-News/1.0',
+            'Accept': 'application/json'
+          },
+          timeout: 10000
+        })
 
-    // Try direct RSS to JSON approach
-    try {
-      console.log('🔄 Trying direct RSS feeds...')
-      
-      const rssFeeds = [
-        'https://businessday.ng/category/agriculture/feed/',
-        'https://guardian.ng/category/features/agric/feed/',
-        'https://punchng.com/topics/agriculture/feed/'
-      ]
-
-      for (const feedUrl of rssFeeds) {
-        try {
-          const rssToJsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&api_key=u0pxzklmkcoh7t4lx6otnosvghfb3vs0o1udhf9s&count=10`
+        if (response.ok) {
+          const data = await response.json()
           
-          const response = await fetch(rssToJsonUrl, {
-            headers: {
-              'User-Agent': 'Victoria-Terragrove-News/1.0'
-            }
-          })
-
-          if (response.ok) {
-            const data = await response.json()
+          if (data.status === 'ok' && data.items && data.items.length > 0) {
+            console.log(`✅ Success! Got ${data.items.length} articles from ${feed.name}`)
             
-            if (data.status === 'ok' && data.items && data.items.length > 0) {
-              console.log(`✅ Successfully fetched from RSS: ${data.feed?.title || 'Unknown feed'}`)
-              
-              const articles = data.items.slice(0, 6).map((item: any) => ({
-                title: item.title || 'Nigerian Agriculture News',
-                description: (item.description || item.content || 'Latest updates from Nigerian agriculture sector')
-                  .replace(/<[^>]*>/g, '')
-                  .substring(0, 250) + (item.description?.length > 250 ? '...' : ''),
-                url: item.link || '#',
-                urlToImage: item.thumbnail || 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&h=400&fit=crop',
-                publishedAt: item.pubDate || new Date().toISOString(),
-                source: { name: data.feed?.title || 'Nigerian Agriculture News' }
-              }))
+            // Get exactly 3 latest articles for carousel
+            const articles = data.items.slice(0, 3).map((item: any) => ({
+              title: cleanTitle(item.title),
+              description: cleanDescription(item.description || item.content),
+              url: item.link || '#',
+              urlToImage: extractImage(item) || getDefaultImage(),
+              publishedAt: item.pubDate || new Date().toISOString(),
+              source: { name: feed.name }
+            }))
 
-              return NextResponse.json({
-                articles,
-                source: 'live-rss',
-                timestamp: new Date().toISOString(),
-                feed_source: data.feed?.title
-              })
-            }
+            return NextResponse.json({
+              articles,
+              source: 'live-rss',
+              timestamp: new Date().toISOString(),
+              feed_name: feed.name,
+              total_articles: articles.length
+            })
           }
-        } catch (feedError) {
-          console.log(`❌ Feed failed: ${feedUrl}`, feedError.message)
-          continue
         }
+      } catch (feedError) {
+        console.log(`❌ ${feed.name} failed:`, feedError.message)
+        continue
       }
-    } catch (rssError) {
-      console.log('❌ RSS approach failed:', rssError.message)
     }
 
     // Enhanced demo data with more variety (fallback)
