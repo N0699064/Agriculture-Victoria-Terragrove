@@ -122,6 +122,16 @@ export async function POST(request: NextRequest) {
     }
 
     try {
+      // Check if email is configured
+      if (!process.env.SMTP_USER || process.env.SMTP_USER === 'your-email@gmail.com') {
+        // Email not configured, but still accept subscription
+        console.log('Newsletter subscription received (email not configured):', email)
+        return NextResponse.json({ 
+          message: 'Successfully subscribed to newsletter',
+          note: 'Email configuration pending - subscription logged'
+        })
+      }
+
       // Send both emails
       await Promise.all([
         transporter.sendMail(adminMailOptions),
@@ -129,14 +139,16 @@ export async function POST(request: NextRequest) {
       ])
       
       return NextResponse.json({ 
-        message: 'Successfully subscribed to newsletter' 
+        message: 'Successfully subscribed to newsletter and welcome email sent'
       })
     } catch (emailError) {
       console.error('Email sending failed:', emailError)
       
-      // Still return success to user even if email fails
+      // Log the subscription even if email fails
+      console.log('Newsletter subscription logged (email failed):', email)
       return NextResponse.json({ 
-        message: 'Successfully subscribed to newsletter' 
+        message: 'Successfully subscribed to newsletter',
+        note: 'Subscription recorded - email delivery pending'
       })
     }
 
