@@ -2,97 +2,81 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    // Try multiple free news sources for Nigerian agriculture news
-    const newsSourcesFree = [
-      {
-        name: 'Nigerian Agriculture RSS',
-        url: 'https://afrimash.com/feed',
-        type: 'rss'
-      },
-      {
-        name: 'BusinessDay Agriculture',
-        url: 'https://businessday.ng/category/agriculture/feed/',
-        type: 'rss'
-      },
-      {
-        name: 'Nigeria News (Free)',
-        url: 'https://newsapi.org/v2/top-headlines?country=ng&category=general&pageSize=20&apiKey=demo',
-        type: 'api'
-      }
-    ]
-
-    let liveArticles = []
-
-    // Try RSS feeds first (most reliable for agriculture)
+    console.log('🔄 Fetching live Nigerian agriculture news...')
+    
+    // First try to get live news from RSS feeds
     try {
-      // Use a free RSS to JSON service
-      const rssResponse = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://businessday.ng/category/agriculture/feed/')
+      const liveResponse = await fetch(`${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/api/news-live`)
       
-      if (rssResponse.ok) {
-        const rssData = await rssResponse.json()
+      if (liveResponse.ok) {
+        const liveData = await liveResponse.json()
         
-        if (rssData.items && rssData.items.length > 0) {
-          liveArticles = rssData.items.slice(0, 6).map((item: any) => ({
-            title: item.title || 'Nigerian Agriculture News',
-            description: item.description?.replace(/<[^>]*>/g, '').substring(0, 300) || 'Latest updates from Nigerian agriculture sector',
-            url: item.link || '#',
-            urlToImage: item.enclosure?.link || item.thumbnail || 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&h=400&fit=crop',
-            publishedAt: item.pubDate || new Date().toISOString(),
-            source: { name: 'BusinessDay Agriculture' }
-          }))
+        if (liveData.articles && liveData.articles.length >= 3) {
+          console.log(`✅ Successfully fetched ${liveData.articles.length} live articles`)
+          return NextResponse.json({
+            articles: liveData.articles,
+            source: 'live-feed',
+            timestamp: new Date().toISOString(),
+            message: 'Live Nigerian agriculture news'
+          })
+        }
+      }
+    } catch (liveError) {
+      console.log('❌ Live feed failed:', liveError.message)
+    }
+
+    // Try direct RSS to JSON approach
+    try {
+      console.log('🔄 Trying direct RSS feeds...')
+      
+      const rssFeeds = [
+        'https://businessday.ng/category/agriculture/feed/',
+        'https://guardian.ng/category/features/agric/feed/',
+        'https://punchng.com/topics/agriculture/feed/'
+      ]
+
+      for (const feedUrl of rssFeeds) {
+        try {
+          const rssToJsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&api_key=u0pxzklmkcoh7t4lx6otnosvghfb3vs0o1udhf9s&count=10`
           
-          console.log(`Fetched ${liveArticles.length} live articles from RSS feed`)
+          const response = await fetch(rssToJsonUrl, {
+            headers: {
+              'User-Agent': 'Victoria-Terragrove-News/1.0'
+            }
+          })
+
+          if (response.ok) {
+            const data = await response.json()
+            
+            if (data.status === 'ok' && data.items && data.items.length > 0) {
+              console.log(`✅ Successfully fetched from RSS: ${data.feed?.title || 'Unknown feed'}`)
+              
+              const articles = data.items.slice(0, 6).map((item: any) => ({
+                title: item.title || 'Nigerian Agriculture News',
+                description: (item.description || item.content || 'Latest updates from Nigerian agriculture sector')
+                  .replace(/<[^>]*>/g, '')
+                  .substring(0, 250) + (item.description?.length > 250 ? '...' : ''),
+                url: item.link || '#',
+                urlToImage: item.thumbnail || 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&h=400&fit=crop',
+                publishedAt: item.pubDate || new Date().toISOString(),
+                source: { name: data.feed?.title || 'Nigerian Agriculture News' }
+              }))
+
+              return NextResponse.json({
+                articles,
+                source: 'live-rss',
+                timestamp: new Date().toISOString(),
+                feed_source: data.feed?.title
+              })
+            }
+          }
+        } catch (feedError) {
+          console.log(`❌ Feed failed: ${feedUrl}`, feedError.message)
+          continue
         }
       }
     } catch (rssError) {
-      console.log('RSS feed failed:', rssError.message)
-    }
-
-    // Try free NewsAPI (without key for basic usage)
-    if (liveArticles.length < 3) {
-      try {
-        // Use free public news API
-        const freeNewsResponse = await fetch('https://newsdata.io/api/1/news?apikey=pub_6169444c8b7e4e56e9c6f9e5d94b3d7c4a7bb&country=ng&category=environment&language=en')
-        
-        if (freeNewsResponse.ok) {
-          const freeNewsData = await freeNewsResponse.json()
-          
-          if (freeNewsData.results && freeNewsData.results.length > 0) {
-            const additionalArticles = freeNewsData.results
-              .filter((article: any) => 
-                article.title && 
-                article.description && 
-                (article.title.toLowerCase().includes('farm') || 
-                 article.title.toLowerCase().includes('crop') || 
-                 article.title.toLowerCase().includes('agriculture') ||
-                 article.description.toLowerCase().includes('farm'))
-              )
-              .slice(0, 4)
-              .map((article: any) => ({
-                title: article.title,
-                description: article.description,
-                url: article.link || '#',
-                urlToImage: article.image_url || 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&h=400&fit=crop',
-                publishedAt: article.pubDate || new Date().toISOString(),
-                source: { name: article.source_id || 'Nigeria News' }
-              }))
-
-            liveArticles = [...liveArticles, ...additionalArticles]
-            console.log(`Added ${additionalArticles.length} articles from free news API`)
-          }
-        }
-      } catch (freeApiError) {
-        console.log('Free news API failed:', freeApiError.message)
-      }
-    }
-
-    // If we got good live articles, return them
-    if (liveArticles.length >= 3) {
-      return NextResponse.json({ 
-        articles: liveArticles.slice(0, 6),
-        source: 'live',
-        timestamp: new Date().toISOString()
-      })
+      console.log('❌ RSS approach failed:', rssError.message)
     }
 
     // Enhanced demo data with more variety (fallback)
