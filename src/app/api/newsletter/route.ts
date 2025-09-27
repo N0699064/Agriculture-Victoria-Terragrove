@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create transporter (using Gmail as an example - you can configure for your preferred service)
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
         user: process.env.SMTP_USER || 'your-email@gmail.com',
