@@ -56,7 +56,11 @@ const Investment = () => {
   ];
 
   return (
-    <section id="investment" className="section-padding bg-stone-50">
+    <section id="investment" className="section-padding relative bg-gradient-to-br from-stone-50 via-emerald-50/30 to-amber-50/40 overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-20" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.06'%3E%3Cpath d='M40 0c22.091 0 40 17.909 40 40s-17.909 40-40 40S0 62.091 0 40 17.909 0 40 0zm0 8c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32S57.673 8 40 8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+      }}></div>
       <div className="container">
         {/* Header */}
         <motion.div
