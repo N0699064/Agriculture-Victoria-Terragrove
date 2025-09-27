@@ -68,10 +68,7 @@ const Hero = () => {
 
           {/* Subtitle */}
           <motion.p
-            className="text-lg sm:text-xl text-stone-600 mb-12 max-w-3xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-lg sm:text-xl text-stone-600 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in"
           >
             Join the agricultural revolution in Africa. Victoria Terragrove offers
             premium investment opportunities that combine sustainable farming practices
