@@ -41,8 +41,8 @@ export async function GET() {
           if ((data.status === 'ok' || data.status === 2) && data.items && data.items.length > 0) {
             console.log(`✅ Success! Got ${data.items.length} articles from ${feed.name}`)
             
-            // Get exactly 3 latest articles for carousel
-            const articles = data.items.slice(0, 3).map((item: any) => ({
+            // Get latest articles and add more detailed content
+            const articles = data.items.slice(0, 6).map((item: any) => ({
               title: cleanTitle(item.title),
               description: cleanDescription(item.description || item.content),
               url: item.link || '#',
