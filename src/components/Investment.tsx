@@ -136,12 +136,15 @@ const Investment = () => {
                 boxShadow: '0 20px 40px -12px rgba(16, 185, 129, 0.15), 0 8px 16px -8px rgba(0, 0, 0, 0.1)'
               }}
             >
-              {/* Enhanced Image with glass overlay */}
-              <div className="h-56 bg-gradient-to-br from-emerald-200 via-green-100 to-amber-200 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-amber-900/10"></div>
-                {/* Floating glass elements */}
-                <div className="absolute top-4 left-4 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full border border-white/30"></div>
-                <div className="absolute bottom-6 right-6 w-12 h-12 bg-emerald-500/20 backdrop-blur-sm rounded-full border border-emerald-300/40"></div>
+              {/* Vibrant Image Header */}
+              <div className="h-56 bg-gradient-to-br from-emerald-400 via-green-300 to-amber-400 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/40 via-transparent to-amber-900/20"></div>
+                {/* Dynamic geometric elements */}
+                <div className="absolute top-4 left-4 w-20 h-20 bg-white/30 rounded-full shadow-lg"></div>
+                <div className="absolute bottom-6 right-6 w-16 h-16 bg-emerald-600/40 rounded-full shadow-md"></div>
+                <div className="absolute top-8 right-8 w-8 h-8 bg-amber-400/60 rounded-full shadow-sm"></div>
+                <div className="absolute bottom-4 left-4 w-6 h-6 bg-white/50 rounded-full"></div>
+                {/* Status badge positioning */}
                 <div className="absolute top-4 right-4">
                   <span className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-md border shadow-lg ${
                     opportunity.status === 'Available' ? 'glass-effect bg-emerald-100/80 text-emerald-900 border-emerald-200/50' :
