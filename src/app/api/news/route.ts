@@ -231,9 +231,11 @@ export async function GET() {
     }
 
     // Return enhanced demo data
+    console.log('Using fallback demo data')
     return NextResponse.json({ 
       articles: demoArticles.slice(0, 6),
-      source: 'demo'
+      source: 'demo',
+      message: 'Using demo data - live APIs unavailable'
     })
 
   } catch (error) {
