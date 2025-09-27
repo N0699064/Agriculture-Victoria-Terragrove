@@ -115,7 +115,7 @@ const Hero = () => {
             }
           }
         } catch (error) {
-          console.log('Auto-refresh failed:', error.message)
+          console.log('Auto-refresh failed:', error instanceof Error ? error.message : 'Unknown error')
         }
       }
       fetchLatestNews()
