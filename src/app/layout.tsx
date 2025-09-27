@@ -1,22 +1,28 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next'
+import { Inter, Playfair_Display } from 'next/font/google'
+import './globals.css'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 
 export const metadata: Metadata = {
-  title: "Victoria Terragrove - Agricultural Investment Excellence",
-  description: "Leading agricultural investment opportunities in Africa. Transform landscapes, grow wealth, and build sustainable futures with Victoria Terragrove.",
-  keywords: "agricultural investment, Africa, Nigeria, sustainable farming, land investment, Victoria Terragrove",
-};
+  title: 'Victoria Terragrove - Agricultural Investment Opportunities',
+  description: 'Transform agricultural landscapes into wealth. Premium investment opportunities in sustainable African agriculture with exceptional returns.',
+  keywords: 'agricultural investment, Africa agriculture, sustainable farming, investment opportunities, Victoria Terragrove',
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="font-body antialiased">
-        {children}
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+      <body className="font-sans">
+        <div className="min-h-screen bg-gray-50">
+          {children}
+        </div>
       </body>
     </html>
-  );
+  )
 }
