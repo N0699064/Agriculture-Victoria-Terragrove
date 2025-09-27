@@ -195,6 +195,13 @@ const NewsPreview = () => {
           </div>
         </div>
       </div>
+
+      {/* Article Modal */}
+      <ArticleModal
+        article={selectedArticle}
+        isOpen={isModalOpen}
+        onClose={closeArticleModal}
+      />
     </section>
   )
 }
