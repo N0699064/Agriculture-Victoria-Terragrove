@@ -101,10 +101,7 @@ const Hero = () => {
 
           {/* Stats */}
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto animate-fade-in"
           >
             {stats.map((stat, index) => {
               const Icon = stat.icon;
