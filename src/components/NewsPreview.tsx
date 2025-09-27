@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { ArrowRight, Calendar, ExternalLink, Newspaper } from 'lucide-react'
+import ArticleModal from './ArticleModal'
 
 interface NewsArticle {
   title: string
