@@ -1,127 +1,82 @@
-"use client";
+'use client'
 
-import { useState, useEffect } from "react";
-import { Menu, X, Leaf } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react'
+import { Menu, X, Leaf } from 'lucide-react'
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navigation = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Services", href: "#services" },
-    { name: "Investment", href: "#investment" },
-    { name: "Contact", href: "#contact" }
-  ];
+  const navItems = [
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Investments', href: '#investments' },
+    { name: 'Contact', href: '#contact' }
+  ]
 
   return (
-    <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4 lg:py-6">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <motion.div
-            className="flex items-center space-x-2"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <div className="bg-green-700 p-2 rounded-lg">
-              <Leaf className="h-6 w-6 text-white" />
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-emerald-600 to-green-600 rounded-lg flex items-center justify-center">
+              <Leaf className="w-5 h-5 text-white" />
             </div>
-            <div className="font-display font-bold text-xl lg:text-2xl text-stone-800">
-              Victoria Terragrove
-            </div>
-          </motion.div>
+            <span className="text-xl font-display font-bold text-gray-900">Victoria Terragrove</span>
+          </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <motion.a
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <a
                 key={item.name}
                 href={item.href}
-                className="text-stone-700 hover:text-green-700 font-medium transition-colors duration-200 relative group"
-                whileHover={{ y: -2 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                className="text-gray-600 hover:text-emerald-600 font-medium transition-colors duration-200"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-700 transition-all duration-300 group-hover:w-full"></span>
-              </motion.a>
+              </a>
             ))}
-            <motion.button
-              className="btn-primary"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <button className="btn-primary text-sm px-6 py-2">
               Get Started
-            </motion.button>
+            </button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden">
+          <div className="md:hidden">
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-stone-700 hover:text-green-700 transition-colors duration-200"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-gray-600 hover:text-gray-900 focus:outline-none"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              className="lg:hidden"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="px-2 pt-2 pb-6 space-y-4 bg-white/95 backdrop-blur-md rounded-lg mt-2 shadow-lg">
-                {navigation.map((item) => (
-                  <motion.a
-                    key={item.name}
-                    href={item.href}
-                    className="block text-stone-700 hover:text-green-700 font-medium py-2 px-4 rounded-lg hover:bg-stone-50 transition-all duration-200"
-                    onClick={() => setIsOpen(false)}
-                    whileHover={{ x: 10 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    {item.name}
-                  </motion.a>
-                ))}
-                <motion.button
-                  className="w-full btn-primary text-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+        {isMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-100">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="block px-3 py-2 text-gray-600 hover:text-emerald-600 font-medium transition-colors duration-200"
+                  onClick={() => setIsMenuOpen(false)}
                 >
+                  {item.name}
+                </a>
+              ))}
+              <div className="pt-2">
+                <button className="btn-primary w-full text-sm">
                   Get Started
-                </motion.button>
+                </button>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          </div>
+        )}
       </nav>
-    </motion.header>
-  );
-};
+    </header>
+  )
+}
 
-export default Header;
+export default Header

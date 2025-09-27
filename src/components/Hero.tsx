@@ -1,206 +1,91 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
-import { ArrowRight, Play, TrendingUp, Users, MapPin } from "lucide-react";
+import { ArrowRight, Play, TrendingUp, Users, MapPin } from 'lucide-react'
 
 const Hero = () => {
   const stats = [
-    { icon: TrendingUp, value: "25%+", label: "Average Returns" },
-    { icon: Users, value: "500+", label: "Investors" },
-    { icon: MapPin, value: "50+", label: "Projects" }
-  ];
+    { icon: TrendingUp, value: '25%+', label: 'Average Returns' },
+    { icon: Users, value: '500+', label: 'Investors' },
+    { icon: MapPin, value: '70+', label: 'Projects' }
+  ]
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Dramatic Background with multiple layers */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-green-400/15 to-amber-400/20">
-        {/* Dynamic mesh gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/10 via-green-500/5 to-yellow-400/10"></div>
-        {/* Enhanced Pattern Overlay */}
-        <div className="absolute inset-0 opacity-40" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.15'%3E%3Ccircle cx='60' cy='60' r='4'/%3E%3Ccircle cx='15' cy='15' r='3'/%3E%3Ccircle cx='105' cy='105' r='3'/%3E%3Ccircle cx='15' cy='105' r='2'/%3E%3Ccircle cx='105' cy='15' r='2'/%3E%3Cpath d='M60 0v120M0 60h120' stroke='%23059669' stroke-opacity='0.05' stroke-width='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
-        {/* Organic shapes for visual interest */}
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-radial from-emerald-400/20 to-transparent rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-radial from-amber-400/25 to-transparent rounded-full transform translate-x-1/3 translate-y-1/3"></div>
-        {/* Sophisticated overlay gradients */}
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/5 via-transparent to-emerald-900/8"></div>
-      </div>
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-green-50">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 hero-pattern opacity-40"></div>
+      
+      {/* Floating Elements */}
+      <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-emerald-400/30 to-green-500/30 rounded-full blur-2xl animate-float"></div>
+      <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-r from-green-400/20 to-emerald-500/20 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
+      <div className="absolute top-1/3 right-1/4 w-24 h-24 bg-gradient-to-r from-amber-400/25 to-yellow-500/25 rounded-full blur-xl animate-float" style={{animationDelay: '4s'}}></div>
 
-      {/* Dynamic Floating elements with enhanced visual impact */}
-      <motion.div
-        className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-emerald-500/50 to-green-700/40 rounded-full blur-2xl shadow-2xl"
-        animate={{
-          y: [0, -40, 0],
-          x: [0, 20, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute top-32 right-16 w-32 h-32 bg-gradient-to-br from-amber-500/40 to-orange-600/30 rounded-full blur-2xl shadow-xl"
-        animate={{
-          y: [0, 30, 0],
-          x: [0, -25, 0],
-          scale: [1, 0.8, 1],
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-32 right-20 w-48 h-48 bg-gradient-to-br from-emerald-400/35 to-green-600/25 rounded-full blur-3xl shadow-2xl"
-        animate={{
-          y: [0, 25, 0],
-          x: [0, -20, 0],
-          rotate: [0, 180, 360],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-16 left-16 w-36 h-36 bg-gradient-to-br from-yellow-500/30 to-amber-700/25 rounded-full blur-2xl shadow-xl"
-        animate={{
-          y: [0, -35, 0],
-          x: [0, 15, 0],
-          scale: [1, 1.3, 1],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      {/* Additional geometric elements for depth */}
-      <motion.div
-        className="absolute top-1/3 left-1/4 w-6 h-6 bg-emerald-500/60 rounded-full shadow-lg"
-        animate={{
-          scale: [1, 1.5, 1],
-          opacity: [0.6, 1, 0.6],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/3 right-1/3 w-4 h-4 bg-amber-500/70 rounded-full shadow-md"
-        animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.7, 1, 0.7],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
-      <div className="container relative z-10">
+      <div className="container relative z-10 pt-20">
         <div className="max-w-4xl mx-auto text-center">
           {/* Announcement Badge */}
-          <motion.div
-            className="inline-flex items-center space-x-2 bg-white/90 text-emerald-900 px-6 py-3 rounded-full text-sm font-bold mb-8 border border-emerald-200/50 shadow-xl hover:shadow-2xl transition-all duration-300 animate-fade-in"
-          >
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          <div className="inline-flex items-center space-x-2 bg-emerald-100/80 text-emerald-800 px-6 py-3 rounded-full text-sm font-semibold mb-8 animate-fade-in border border-emerald-200/50">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
             <span>New investment opportunities available</span>
-          </motion.div>
+          </div>
 
           {/* Main Heading */}
-          <motion.h1
-            className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-stone-800 mb-6 leading-tight animate-fade-in"
-          >
+          <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight animate-slide-up">
             Transform
-            <span className="text-gradient block">
+            <span className="gradient-text block">
               Agricultural Landscapes
             </span>
             Into Wealth
-          </motion.h1>
+          </h1>
 
           {/* Subtitle */}
-          <motion.p
-            className="text-lg sm:text-xl text-stone-600 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in"
-          >
-            Join the agricultural revolution in Africa. Victoria Terragrove offers
-            premium investment opportunities that combine sustainable farming practices
-            with exceptional returns, creating lasting value for communities and investors.
-          </motion.p>
+          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in">
+            Join the agricultural revolution in Africa. Victoria Terragrove offers premium investment opportunities that combine sustainable farming practices with exceptional returns, creating lasting value for communities and investors.
+          </p>
 
           {/* CTA Buttons */}
-          <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16 animate-fade-in"
-          >
-            <motion.button
-              className="btn-primary flex items-center space-x-2 group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16 animate-scale-in">
+            <button className="btn-primary group">
               <span>Explore Opportunities</span>
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
-            </motion.button>
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+            </button>
             
-            <motion.button
-              className="flex items-center space-x-3 text-stone-700 hover:text-emerald-700 transition-all duration-300 group"
-              whileHover={{ scale: 1.05 }}
-            >
-              <div className="w-14 h-14 glass-effect bg-white/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 border border-white/30 group-hover:bg-white/80">
-                <Play className="h-6 w-6 ml-0.5 text-emerald-700" />
+            <button className="flex items-center space-x-3 text-gray-700 hover:text-emerald-700 transition-colors duration-200 group">
+              <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-200 border border-gray-100">
+                <Play className="w-5 h-5 ml-0.5 text-emerald-600" />
               </div>
               <span className="font-semibold">Watch Our Story</span>
-            </motion.button>
-          </motion.div>
+            </button>
+          </div>
 
           {/* Stats */}
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto animate-fade-in"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto animate-fade-in">
             {stats.map((stat, index) => {
-              const Icon = stat.icon;
+              const Icon = stat.icon
               return (
-                <motion.div
-                  key={stat.label}
-                  className="text-center group"
-                  whileHover={{ y: -5 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-4 group-hover:bg-green-200 transition-colors duration-200">
-                    <Icon className="h-6 w-6 text-green-700" />
+                <div key={stat.label} className="text-center group cursor-pointer">
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-emerald-100 rounded-xl mb-4 group-hover:bg-emerald-200 transition-colors duration-200">
+                    <Icon className="w-6 h-6 text-emerald-700" />
                   </div>
-                  <div className="text-2xl sm:text-3xl font-bold font-display text-stone-800 mb-1">
+                  <div className="text-3xl font-bold font-display text-gray-900 mb-1">
                     {stat.value}
                   </div>
-                  <div className="text-stone-600 font-medium">
+                  <div className="text-gray-600 font-medium">
                     {stat.label}
                   </div>
-                </motion.div>
-              );
+                </div>
+              )
             })}
-          </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <div className="w-6 h-10 border-2 border-stone-400 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-stone-400 rounded-full mt-2 animate-pulse"></div>
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
         </div>
-      </motion.div>
+      </div>
     </section>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero
