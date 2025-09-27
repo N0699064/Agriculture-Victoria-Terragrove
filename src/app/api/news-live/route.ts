@@ -59,7 +59,7 @@ export async function GET() {
           }
         }
       } catch (sourceError) {
-        console.log(`Failed to fetch from ${source.name}:`, sourceError.message)
+        console.log(`Failed to fetch from ${source.name}:`, sourceError instanceof Error ? sourceError.message : 'Unknown error')
         continue
       }
     }
