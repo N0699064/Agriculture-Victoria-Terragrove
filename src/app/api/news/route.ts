@@ -1,4 +1,20 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+
+interface NewsArticle {
+  title?: string;
+  description?: string;
+  url?: string;
+  urlToImage?: string;
+  publishedAt?: string;
+  source?: { name?: string };
+  content?: string;
+}
+
+interface NewsResponse {
+  articles?: NewsArticle[];
+  status?: string;
+  totalResults?: number;
+}
 
 export async function GET() {
   try {
@@ -21,7 +37,7 @@ export async function GET() {
           'Africa agriculture Nigeria'
         ]
 
-        let allArticles: any[] = []
+        const allArticles: NewsArticle[] = []
 
         // Try each search query
         for (const query of searchQueries) {
@@ -35,11 +51,11 @@ export async function GET() {
             })
 
             if (response.ok) {
-              const data = await response.json()
+              const data: NewsResponse = await response.json()
               
               if (data.articles && data.articles.length > 0) {
                 // Filter for relevant agriculture content
-                const relevantArticles = data.articles.filter((article: any) => 
+                const relevantArticles = data.articles.filter((article: NewsArticle) => 
                   article.title && 
                   article.description && 
                   article.urlToImage &&
@@ -49,7 +65,7 @@ export async function GET() {
                     // Nigerian content
                     article.title.toLowerCase().includes('nigeria') ||
                     article.description.toLowerCase().includes('nigeria') ||
-                    article.source.name.toLowerCase().includes('nigeria') ||
+                    (article.source?.name?.toLowerCase().includes('nigeria')) ||
                     // Or general agriculture with African context
                     (
                       (article.title.toLowerCase().includes('africa') || article.description.toLowerCase().includes('africa')) &&
@@ -63,7 +79,7 @@ export async function GET() {
               }
             }
           } catch (queryError) {
-            console.log(`Query "${query}" failed:`, queryError.message)
+            console.log(`Query "${query}" failed:`, queryError instanceof Error ? queryError.message : 'Unknown error')
             continue
           }
         }
@@ -95,7 +111,7 @@ export async function GET() {
           })
         }
       } catch (newsApiError) {
-        console.log('❌ NewsAPI failed:', newsApiError.message)
+        console.log('❌ NewsAPI failed:', newsApiError instanceof Error ? newsApiError.message : 'Unknown error')
       }
     } else {
       console.log('⚠️ NewsAPI key not configured')
@@ -139,7 +155,7 @@ export async function GET() {
         }
       }
     } catch (rssError) {
-      console.log('❌ RSS backup failed:', rssError.message)
+      console.log('❌ RSS backup failed:', rssError instanceof Error ? rssError.message : 'Unknown error')
     }
 
     // Return latest 3 fallback articles for carousel
