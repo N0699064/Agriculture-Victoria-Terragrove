@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Victoria Terragrove - Agricultural Investment Website
 
-## Getting Started
+A professional agricultural investment website built with **Next.js 15**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.
 
-First, run the development server:
+## 🌱 Project Overview
 
+Victoria Terragrove is a modern, conversion-optimized website for agricultural investment opportunities in Africa. The site showcases premium investment opportunities with sustainable farming practices and exceptional returns.
+
+## ✨ Features
+
+### Core Sections
+- **Hero Section**: Compelling headline with animated elements and key statistics
+- **About Section**: Company overview with core values and achievements
+- **Services Section**: Comprehensive agricultural solutions and offerings
+- **Investment Opportunities**: Featured investment projects with detailed information
+- **Newsletter Signup**: Functional email subscription with API integration
+- **Footer**: Complete contact information and navigation
+
+### Technical Features
+- **Next.js 15** with App Router and TypeScript
+- **Responsive Design** with Tailwind CSS
+- **Smooth Animations** using Framer Motion and CSS animations
+- **Professional Color Palette**: Deep greens, warm browns, creamy off-whites
+- **Modern Typography**: Playfair Display (headings) + Inter (body)
+- **Email Integration**: Nodemailer with transactional emails
+- **Performance Optimized**: Fast loading and smooth interactions
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- Yarn package manager
+
+### Installation
+
+1. **Install dependencies**:
+   ```bash
+   yarn install
+   ```
+
+2. **Configure email settings** (optional):
+   ```bash
+   # Update .env.local with your email service credentials
+   SMTP_USER=your-email@gmail.com
+   SMTP_PASS=your-app-password
+   ```
+
+3. **Start development server**:
+   ```bash
+   yarn dev
+   ```
+
+4. **Open in browser**:
+   ```
+   http://localhost:3000
+   ```
+
+## 📧 Newsletter Functionality
+
+The newsletter subscription sends emails to `jeff4conrad@hotmail.com` with:
+- **Admin Notification**: New subscriber details with styling
+- **Welcome Email**: Professional onboarding email to subscriber
+- **Error Handling**: Graceful fallbacks and user feedback
+
+### API Endpoint
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+POST /api/newsletter
+Content-Type: application/json
+
+{
+  "email": "user@example.com"
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Design Guidelines
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Color Palette
+- **Primary Green**: `#059669` (Professional agricultural theme)
+- **Stone/Earth Tones**: `#78716c`, `#57534e` (Natural, earthy feel)
+- **Warm Accents**: `#a67c52` (Complementary brown tones)
+- **Light Backgrounds**: `#f9f9f7`, `#f5f5f4` (Clean, modern)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Typography
+- **Display Font**: Playfair Display (Elegant serif for headings)
+- **Body Font**: Inter (Clean, readable sans-serif)
 
-## Learn More
+### Animation Principles
+- **Subtle Entrance**: Fade-in animations for content sections
+- **Hover Effects**: Scale and color transitions on interactive elements
+- **Smooth Scrolling**: CSS scroll-behavior for navigation
+- **Floating Elements**: Background decorative animations
 
-To learn more about Next.js, take a look at the following resources:
+## 📈 Investment Opportunities Showcased
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Premium Cocoa Plantation** (Ghana): 18-22% annual returns
+- **Modern Rice Farming** (Nigeria): 15-20% annual returns  
+- **Cashew Processing Facility** (Ivory Coast): 25-30% annual returns
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤝 Contact Information
 
-## Deploy on Vercel
+- **Email**: info@victoriaterragrove.com
+- **Phone**: +234 901 234 5678
+- **Address**: Plot 123, Victoria Island, Lagos, Nigeria
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Built with ❤️ for sustainable agricultural investment in Africa*
