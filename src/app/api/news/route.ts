@@ -24,21 +24,21 @@ export async function GET() {
       try {
         console.log(`🔄 Trying ${feed.name}...`)
         
-        const rssToJsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=5`
+        const rssToJsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=6`
         
         const response = await fetch(rssToJsonUrl, {
           method: 'GET',
           headers: {
             'User-Agent': 'Victoria-Terragrove-News/1.0',
             'Accept': 'application/json'
-          },
-          timeout: 10000
+          }
         })
 
         if (response.ok) {
           const data = await response.json()
+          console.log(`RSS Response for ${feed.name}:`, data.status, data.items?.length || 0, 'items')
           
-          if (data.status === 'ok' && data.items && data.items.length > 0) {
+          if ((data.status === 'ok' || data.status === 2) && data.items && data.items.length > 0) {
             console.log(`✅ Success! Got ${data.items.length} articles from ${feed.name}`)
             
             // Get exactly 3 latest articles for carousel
