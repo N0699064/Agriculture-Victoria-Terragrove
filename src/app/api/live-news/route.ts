@@ -1,4 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+
+interface RSSItem {
+  title?: string;
+  description?: string;
+  content?: string;
+  link?: string;
+  guid?: string;
+  thumbnail?: string;
+  pubDate?: string;
+}
+
+interface RSSResponse {
+  status: string;
+  items?: RSSItem[];
+}
 
 export async function GET() {
   try {
@@ -21,12 +36,12 @@ export async function GET() {
       console.log('Response status:', response.status)
       
       if (response.ok) {
-        const data = await response.json()
+        const data: RSSResponse = await response.json()
         console.log('RSS Response status:', data.status)
         console.log('Items found:', data.items?.length || 0)
         
         if (data.status === 'ok' && data.items && data.items.length > 0) {
-          const liveArticles = data.items.slice(0, 6).map((item: any) => ({
+          const liveArticles = data.items.slice(0, 6).map((item: RSSItem) => ({
             title: item.title || 'Nigerian Agriculture News',
             description: (item.description || item.content || 'Latest agriculture update')
               .replace(/<[^>]*>/g, '')
@@ -48,7 +63,7 @@ export async function GET() {
         }
       }
     } catch (rssError) {
-      console.log('RSS fetch failed:', rssError.message)
+      console.log('RSS fetch failed:', rssError instanceof Error ? rssError.message : 'Unknown error')
     }
 
     // Return enhanced fallback articles
