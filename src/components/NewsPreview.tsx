@@ -16,6 +16,18 @@ interface NewsArticle {
 const NewsPreview = () => {
   const [articles, setArticles] = useState<NewsArticle[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const openArticleModal = (article: NewsArticle) => {
+    setSelectedArticle(article)
+    setIsModalOpen(true)
+  }
+
+  const closeArticleModal = () => {
+    setIsModalOpen(false)
+    setSelectedArticle(null)
+  }
 
   useEffect(() => {
     const fetchNews = async () => {
