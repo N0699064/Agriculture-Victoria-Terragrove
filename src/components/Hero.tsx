@@ -110,7 +110,7 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Announcement Badge */}
           <motion.div
-            className="inline-flex items-center space-x-2 glass-effect bg-emerald-100/80 text-emerald-900 px-6 py-3 rounded-full text-sm font-medium mb-8 backdrop-blur-md border border-emerald-200/30 shadow-lg animate-fade-in"
+            className="inline-flex items-center space-x-2 bg-white/90 text-emerald-900 px-6 py-3 rounded-full text-sm font-bold mb-8 border border-emerald-200/50 shadow-xl hover:shadow-2xl transition-all duration-300 animate-fade-in"
           >
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
             <span>New investment opportunities available</span>
