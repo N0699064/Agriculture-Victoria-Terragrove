@@ -42,7 +42,8 @@ const Hero = () => {
         
         const data = await response.json()
         console.log('Hero: Data received:', data)
-        setNewsArticles(data.articles || [])
+        // Always show only the latest 3 articles for carousel
+        setNewsArticles(data.articles?.slice(0, 3) || [])
       } catch (error) {
         console.error('Hero: Failed to fetch news:', error)
         // Set fallback articles for hero
