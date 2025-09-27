@@ -123,7 +123,7 @@ const Investment = () => {
           {opportunities.map((opportunity, index) => (
             <motion.div
               key={opportunity.title}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-stone-200"
+              className="glass-effect bg-white/90 backdrop-blur-md rounded-3xl overflow-hidden shadow-xl card-hover border border-white/40 hover:border-emerald-200/50 hover:shadow-2xl transition-all duration-500"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
