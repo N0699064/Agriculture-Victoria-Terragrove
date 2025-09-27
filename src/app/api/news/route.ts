@@ -13,9 +13,12 @@ export async function GET() {
         
         // Multiple search queries for better Nigerian agriculture coverage
         const searchQueries = [
-          'Nigeria agriculture farming',
-          'Nigerian rice cocoa farming',
-          'Nigeria agricultural development',
+          'Nigeria agriculture',
+          'Nigeria farming',
+          'Nigerian farmers',
+          'Nigeria rice production',
+          'Nigeria cocoa farming',
+          'Africa agriculture Nigeria'
         ]
 
         let allArticles: any[] = []
