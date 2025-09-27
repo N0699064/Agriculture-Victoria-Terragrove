@@ -38,7 +38,7 @@ export async function GET() {
           const data = await response.json()
           console.log(`RSS Response for ${feed.name}:`, data.status, data.items?.length || 0, 'items')
           
-          if ((data.status === 'ok' || data.status === 2) && data.items && data.items.length > 0) {
+          if (data.status === 'ok' && data.items && data.items.length > 0) {
             console.log(`✅ Success! Got ${data.items.length} articles from ${feed.name}`)
             
             // Get latest articles and add more detailed content
