@@ -2,10 +2,109 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    console.log('🔄 Fetching latest Nigerian agriculture news...')
+    console.log('🔄 Fetching LIVE Nigerian agriculture news with NewsAPI...')
     
-    // Try to get live news from BusinessDay RSS
+    const API_KEY = process.env.NEWS_API_KEY
+    
+    // Check if NewsAPI key is configured
+    if (API_KEY && API_KEY !== 'your-newsapi-key-here') {
+      try {
+        console.log('✅ NewsAPI key found, fetching live news...')
+        
+        // Multiple search queries for better Nigerian agriculture coverage
+        const searchQueries = [
+          'Nigeria agriculture farming',
+          'Nigerian rice cocoa farming',
+          'Nigeria agricultural development',
+        ]
+
+        let allArticles: any[] = []
+
+        // Try each search query
+        for (const query of searchQueries) {
+          try {
+            const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&sortBy=publishedAt&pageSize=20&apiKey=${API_KEY}`
+            
+            const response = await fetch(url, {
+              headers: {
+                'User-Agent': 'Victoria-Terragrove/1.0'
+              }
+            })
+
+            if (response.ok) {
+              const data = await response.json()
+              
+              if (data.articles && data.articles.length > 0) {
+                // Filter for Nigerian agriculture content
+                const relevantArticles = data.articles.filter((article: any) => 
+                  article.title && 
+                  article.description && 
+                  article.urlToImage &&
+                  !article.title.includes('[Removed]') &&
+                  (
+                    article.title.toLowerCase().includes('nigeria') ||
+                    article.description.toLowerCase().includes('nigeria') ||
+                    article.title.toLowerCase().includes('africa') ||
+                    article.source.name.toLowerCase().includes('nigeria')
+                  ) &&
+                  (
+                    article.title.toLowerCase().includes('agriculture') ||
+                    article.title.toLowerCase().includes('farming') ||
+                    article.title.toLowerCase().includes('farm') ||
+                    article.title.toLowerCase().includes('crop') ||
+                    article.title.toLowerCase().includes('rice') ||
+                    article.title.toLowerCase().includes('cocoa') ||
+                    article.description.toLowerCase().includes('agriculture') ||
+                    article.description.toLowerCase().includes('farming')
+                  )
+                )
+
+                allArticles.push(...relevantArticles)
+                console.log(`Found ${relevantArticles.length} relevant articles for "${query}"`)
+              }
+            }
+          } catch (queryError) {
+            console.log(`Query "${query}" failed:`, queryError.message)
+            continue
+          }
+        }
+
+        // Remove duplicates and format articles
+        const uniqueArticles = allArticles
+          .filter((article, index, self) => 
+            index === self.findIndex(a => a.title === article.title)
+          )
+          .slice(0, 8)
+          .map((article: any) => ({
+            title: cleanTitle(article.title),
+            description: cleanDescription(article.description),
+            url: article.url,
+            urlToImage: article.urlToImage,
+            publishedAt: article.publishedAt,
+            source: { name: article.source.name }
+          }))
+
+        if (uniqueArticles.length >= 3) {
+          console.log(`🎉 SUCCESS! Returning ${uniqueArticles.length} LIVE Nigerian agriculture articles from NewsAPI`)
+          
+          return NextResponse.json({
+            articles: uniqueArticles,
+            source: 'newsapi-live',
+            timestamp: new Date().toISOString(),
+            message: `Live Nigerian agriculture news from ${uniqueArticles.length} sources`,
+            total_articles: uniqueArticles.length
+          })
+        }
+      } catch (newsApiError) {
+        console.log('❌ NewsAPI failed:', newsApiError.message)
+      }
+    } else {
+      console.log('⚠️ NewsAPI key not configured')
+    }
+
+    // Try RSS as backup
     try {
+      console.log('🔄 Trying RSS backup...')
       const rssUrl = 'https://businessday.ng/category/agriculture/feed/'
       const rssToJsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&count=8`
       
@@ -18,12 +117,11 @@ export async function GET() {
 
       if (response.ok) {
         const data = await response.json()
-        console.log('RSS Response:', data.status, 'Items:', data.items?.length || 0)
         
         if (data.status === 'ok' && data.items && data.items.length > 0) {
-          console.log('✅ SUCCESS! Got LIVE articles from BusinessDay Agriculture')
+          console.log('✅ RSS backup successful!')
           
-          const liveArticles = data.items.slice(0, 8).map((item: any) => ({
+          const rssArticles = data.items.slice(0, 8).map((item: any) => ({
             title: cleanTitle(item.title),
             description: cleanDescription(item.description || item.content),
             url: item.link || item.guid || '/news',
@@ -33,16 +131,16 @@ export async function GET() {
           }))
 
           return NextResponse.json({
-            articles: liveArticles,
-            source: 'live-businessday',
+            articles: rssArticles,
+            source: 'rss-backup',
             timestamp: new Date().toISOString(),
-            message: 'Live Nigerian agriculture news from BusinessDay',
-            total_articles: liveArticles.length
+            message: 'Live Nigerian agriculture news from RSS backup',
+            total_articles: rssArticles.length
           })
         }
       }
     } catch (rssError) {
-      console.log('❌ RSS fetch failed:', rssError.message)
+      console.log('❌ RSS backup failed:', rssError.message)
     }
 
     // Return latest 3 fallback articles for carousel
