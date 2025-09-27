@@ -24,12 +24,13 @@ const Hero = () => {
         <div className="absolute inset-0 bg-radial-gradient from-transparent via-emerald-50/20 to-green-100/10"></div>
       </div>
 
-      {/* Floating elements */}
+      {/* Enhanced Floating elements with glass morphism */}
       <motion.div
-        className="absolute top-20 left-10 w-20 h-20 bg-green-200/30 rounded-full blur-xl"
+        className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-emerald-400/40 to-green-600/30 rounded-full blur-2xl backdrop-blur-sm"
         animate={{
-          y: [0, -20, 0],
-          x: [0, 10, 0],
+          y: [0, -30, 0],
+          x: [0, 15, 0],
+          scale: [1, 1.1, 1],
         }}
         transition={{
           duration: 8,
@@ -38,10 +39,37 @@ const Hero = () => {
         }}
       />
       <motion.div
-        className="absolute bottom-32 right-16 w-32 h-32 bg-amber-200/20 rounded-full blur-2xl"
+        className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-amber-400/30 to-orange-500/20 rounded-full blur-xl backdrop-blur-sm"
+        animate={{
+          y: [0, 25, 0],
+          x: [0, -20, 0],
+          scale: [1, 0.9, 1],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-emerald-300/25 to-green-500/15 rounded-full blur-3xl backdrop-blur-sm"
         animate={{
           y: [0, 20, 0],
           x: [0, -15, 0],
+          rotate: [0, 180, 360],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-20 left-20 w-28 h-28 bg-gradient-to-br from-yellow-400/20 to-amber-600/15 rounded-full blur-2xl backdrop-blur-sm"
+        animate={{
+          y: [0, -25, 0],
+          x: [0, 10, 0],
+          scale: [1, 1.2, 1],
         }}
         transition={{
           duration: 10,
