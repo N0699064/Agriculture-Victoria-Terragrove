@@ -168,14 +168,14 @@ const NewsPreview = () => {
                       }
                     </p>
 
-                    {/* Read More Link */}
-                    <a
-                      href={article.url === '#' ? '/news' : article.url}
+                    {/* Read More Button */}
+                    <button
+                      onClick={() => openArticleModal(article)}
                       className="inline-flex items-center space-x-2 text-emerald-600 font-semibold hover:text-emerald-700 transition-colors duration-200 group/link text-sm"
                     >
-                      <span>Read More</span>
+                      <span>Read Full Story</span>
                       <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform duration-200" />
-                    </a>
+                    </button>
                   </div>
                 </div>
               ))}
