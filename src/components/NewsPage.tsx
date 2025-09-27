@@ -367,16 +367,14 @@ const NewsPage = () => {
                     {article.description}
                   </p>
 
-                  {/* Read More Link */}
-                  <a
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  {/* Read More Button */}
+                  <button
+                    onClick={() => openArticleModal(article)}
                     className="inline-flex items-center space-x-2 text-emerald-600 font-semibold hover:text-emerald-700 transition-colors duration-200 group/link"
                   >
-                    <span>Read Full Article</span>
+                    <span>Read Full Story</span>
                     <ExternalLink className="w-4 h-4 group-hover/link:translate-x-1 transition-transform duration-200" />
-                  </a>
+                  </button>
                 </div>
               </article>
             ))}
