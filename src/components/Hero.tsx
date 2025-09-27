@@ -49,10 +49,7 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Announcement Badge */}
           <motion.div
-            className="inline-flex items-center space-x-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            className="inline-flex items-center space-x-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium mb-8 animate-fade-in"
           >
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
             <span>New investment opportunities available</span>
