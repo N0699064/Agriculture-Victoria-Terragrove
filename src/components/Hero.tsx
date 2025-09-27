@@ -218,10 +218,10 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Right Side - News Carousel */}
-            <div className="lg:pl-8">
+            {/* Right Side - News Carousel with Limited Width */}
+            <div className="lg:pl-8 max-w-md mx-auto lg:mx-0">
               {loading ? (
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 animate-pulse">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 animate-pulse">
                   <div className="h-4 bg-white/20 rounded mb-4"></div>
                   <div className="space-y-3">
                     <div className="h-3 bg-white/20 rounded"></div>
@@ -230,46 +230,47 @@ const Hero = () => {
                 </div>
               ) : (
                 <div className="relative">
-                  {/* News Card */}
+                  {/* News Card with Limited Width */}
                   {currentArticle && (
-                    <div className="bg-white/95 backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl border border-white/20 transform transition-all duration-500 hover:scale-105">
+                    <div className="bg-white/95 backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl border border-white/20 transform transition-all duration-500 hover:scale-105 max-w-sm">
                       {/* News Header */}
-                      <div className="bg-gradient-to-r from-emerald-600 to-green-600 px-6 py-4">
+                      <div className="bg-gradient-to-r from-emerald-600 to-green-600 px-5 py-3">
                         <div className="flex items-center justify-between">
-                          <h3 className="text-white font-bold text-lg">Latest Agriculture News</h3>
+                          <h3 className="text-white font-bold text-base">Latest Agriculture News</h3>
                           <a 
                             href="/news"
-                            className="text-emerald-100 hover:text-white text-sm font-medium flex items-center space-x-1"
+                            className="text-emerald-100 hover:text-white text-xs font-medium flex items-center space-x-1"
                           >
-                            <span>View All</span>
-                            <ExternalLink className="w-4 h-4" />
+                            <span>All</span>
+                            <ExternalLink className="w-3 h-3" />
                           </a>
                         </div>
                       </div>
 
                       {/* News Content */}
-                      <div className="p-6">
+                      <div className="p-5">
                         <div className="flex items-center space-x-2 text-xs text-emerald-600 font-semibold mb-3">
-                          <span className="px-2 py-1 bg-emerald-100 rounded-full">{currentArticle.source.name}</span>
+                          <span className="px-2 py-1 bg-emerald-100 rounded-full text-xs">{currentArticle.source.name}</span>
                           <span className="text-gray-500">•</span>
                           <span className="text-gray-500">
                             {new Date(currentArticle.publishedAt).toLocaleDateString()}
                           </span>
                         </div>
                         
-                        <h4 className="font-display text-xl font-bold text-gray-900 mb-3 leading-tight">
+                        <h4 className="font-display text-lg font-bold text-gray-900 mb-3 leading-tight">
                           {currentArticle.title}
                         </h4>
                         
                         <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                          {currentArticle.description.substring(0, 150)}...
+                          {currentArticle.description.length > 120 
+                            ? currentArticle.description.substring(0, 120) + '...'
+                            : currentArticle.description
+                          }
                         </p>
 
                         <a
                           href={currentArticle.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center space-x-2 text-emerald-600 font-semibold hover:text-emerald-700 transition-colors duration-200 group/link"
+                          className="inline-flex items-center space-x-2 text-emerald-600 font-semibold hover:text-emerald-700 transition-colors duration-200 group/link text-sm"
                         >
                           <span>Read More</span>
                           <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform duration-200" />
@@ -278,36 +279,47 @@ const Hero = () => {
                     </div>
                   )}
 
-                  {/* Carousel Controls */}
+                  {/* Enhanced Carousel Controls */}
                   {newsArticles.length > 1 && (
                     <>
+                      {/* Navigation Arrows */}
                       <button
                         onClick={prevSlide}
-                        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-12 w-10 h-10 bg-black/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/50 transition-all duration-200"
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-14 w-12 h-12 bg-emerald-600/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-emerald-700 transition-all duration-200 shadow-lg border border-emerald-400/30"
+                        aria-label="Previous news"
                       >
-                        <ChevronLeft className="w-5 h-5" />
+                        <ChevronLeft className="w-6 h-6" />
                       </button>
                       
                       <button
                         onClick={nextSlide}
-                        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-12 w-10 h-10 bg-black/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/50 transition-all duration-200"
+                        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-14 w-12 h-12 bg-emerald-600/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-emerald-700 transition-all duration-200 shadow-lg border border-emerald-400/30"
+                        aria-label="Next news"
                       >
-                        <ChevronRight className="w-5 h-5" />
+                        <ChevronRight className="w-6 h-6" />
                       </button>
 
-                      {/* Slide Indicators */}
-                      <div className="flex justify-center space-x-2 mt-6">
+                      {/* Enhanced Slide Indicators */}
+                      <div className="flex justify-center space-x-3 mt-6">
                         {newsArticles.map((_, index) => (
                           <button
                             key={index}
                             onClick={() => setCurrentSlide(index)}
-                            className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                            className={`transition-all duration-300 rounded-full ${
                               index === currentSlide 
-                                ? 'bg-white w-8' 
-                                : 'bg-white/50 hover:bg-white/70'
+                                ? 'bg-emerald-400 w-8 h-3' 
+                                : 'bg-white/60 hover:bg-white/80 w-3 h-3'
                             }`}
+                            aria-label={`Go to slide ${index + 1}`}
                           />
                         ))}
+                      </div>
+
+                      {/* Article Counter */}
+                      <div className="text-center mt-3">
+                        <span className="text-white/80 text-sm font-medium">
+                          {currentSlide + 1} of {newsArticles.length}
+                        </span>
                       </div>
                     </>
                   )}
