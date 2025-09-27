@@ -129,9 +129,12 @@ const Investment = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              {/* Image */}
-              <div className="h-48 bg-gradient-to-br from-green-100 to-amber-100 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              {/* Enhanced Image with glass overlay */}
+              <div className="h-56 bg-gradient-to-br from-emerald-200 via-green-100 to-amber-200 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-amber-900/10"></div>
+                {/* Floating glass elements */}
+                <div className="absolute top-4 left-4 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full border border-white/30"></div>
+                <div className="absolute bottom-6 right-6 w-12 h-12 bg-emerald-500/20 backdrop-blur-sm rounded-full border border-emerald-300/40"></div>
                 <div className="absolute top-4 right-4">
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                     opportunity.status === 'Available' ? 'bg-green-100 text-green-800' :
