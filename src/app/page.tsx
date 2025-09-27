@@ -1,7 +1,7 @@
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
-import Investments from '@/components/Investments'
+import NewsBlog from '@/components/NewsBlog'
 import Newsletter from '@/components/Newsletter'
 import Footer from '@/components/Footer'
 
@@ -11,7 +11,7 @@ export default function Home() {
       <Header />
       <Hero />
       <About />
-      <Investments />
+      <NewsBlog />
       <Newsletter />
       <Footer />
     </main>
