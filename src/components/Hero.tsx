@@ -12,11 +12,16 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-stone-50 to-amber-50">
-        <div className="absolute inset-0 opacity-40" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+      {/* Enhanced Background with multiple layers */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-100 via-green-50 to-amber-100">
+        {/* Primary Pattern */}
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.1'%3E%3Ccircle cx='50' cy='50' r='3'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Ccircle cx='90' cy='90' r='2'/%3E%3Ccircle cx='10' cy='90' r='1.5'/%3E%3Ccircle cx='90' cy='10' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
         }}></div>
+        {/* Secondary overlay with subtle gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/5 via-transparent to-amber-900/5"></div>
+        {/* Radial gradient for depth */}
+        <div className="absolute inset-0 bg-radial-gradient from-transparent via-emerald-50/20 to-green-100/10"></div>
       </div>
 
       {/* Floating elements */}
