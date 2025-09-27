@@ -38,27 +38,23 @@ export async function GET() {
               const data = await response.json()
               
               if (data.articles && data.articles.length > 0) {
-                // Filter for Nigerian agriculture content
+                // Filter for relevant agriculture content
                 const relevantArticles = data.articles.filter((article: any) => 
                   article.title && 
                   article.description && 
                   article.urlToImage &&
                   !article.title.includes('[Removed]') &&
+                  article.description.length > 50 &&
                   (
+                    // Nigerian content
                     article.title.toLowerCase().includes('nigeria') ||
                     article.description.toLowerCase().includes('nigeria') ||
-                    article.title.toLowerCase().includes('africa') ||
-                    article.source.name.toLowerCase().includes('nigeria')
-                  ) &&
-                  (
-                    article.title.toLowerCase().includes('agriculture') ||
-                    article.title.toLowerCase().includes('farming') ||
-                    article.title.toLowerCase().includes('farm') ||
-                    article.title.toLowerCase().includes('crop') ||
-                    article.title.toLowerCase().includes('rice') ||
-                    article.title.toLowerCase().includes('cocoa') ||
-                    article.description.toLowerCase().includes('agriculture') ||
-                    article.description.toLowerCase().includes('farming')
+                    article.source.name.toLowerCase().includes('nigeria') ||
+                    // Or general agriculture with African context
+                    (
+                      (article.title.toLowerCase().includes('africa') || article.description.toLowerCase().includes('africa')) &&
+                      (article.title.toLowerCase().includes('agriculture') || article.title.toLowerCase().includes('farming'))
+                    )
                   )
                 )
 
