@@ -27,35 +27,100 @@
 
 @layer components {
   .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
   }
   
   .section-padding {
-    @apply py-16 lg:py-24;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  
+  @media (min-width: 1024px) {
+    .section-padding {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
   }
   
   .text-gradient {
-    @apply bg-gradient-to-r from-green-800 via-green-700 to-green-600 bg-clip-text text-transparent;
+    background: linear-gradient(to right, #166534, #15803d, #16a34a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    transition: all 0.3s ease;
+  }
+  
+  .card-hover:hover {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-4px);
   }
   
   .btn-primary {
-    @apply bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105;
+    background-color: #15803d;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .btn-primary:hover {
+    background-color: #166534;
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
   }
   
   .btn-secondary {
-    @apply bg-stone-600 hover:bg-stone-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg;
+    background-color: #57534e;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
   
-  .text-earth {
-    @apply text-stone-700;
+  .btn-secondary:hover {
+    background-color: #44403c;
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
   }
   
-  .bg-earth {
-    @apply bg-stone-50;
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .font-body {
+    font-family: 'Inter', sans-serif;
   }
 }
 
