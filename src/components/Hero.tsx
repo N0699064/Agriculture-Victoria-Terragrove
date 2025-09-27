@@ -97,23 +97,29 @@ const Hero = () => {
     return () => clearInterval(interval)
   }, [newsArticles.length])
 
-  // Auto-refresh news every 2 minutes to get latest articles
+  // Auto-refresh news every 3 minutes to get latest articles
   useEffect(() => {
     const refreshInterval = setInterval(() => {
       console.log('🔄 Auto-refreshing news articles...')
-      const fetchNews = async () => {
+      const fetchLatestNews = async () => {
         try {
-          const response = await fetch('/api/news')
+          const response = await fetch('/api/news', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+          })
           if (response.ok) {
             const data = await response.json()
-            setNewsArticles(data.articles?.slice(0, 3) || []) // Always get latest 3
+            if (data.articles && data.articles.length > 0) {
+              setNewsArticles(data.articles.slice(0, 3))
+              console.log('✅ Auto-refresh successful')
+            }
           }
         } catch (error) {
-          console.log('Auto-refresh failed:', error)
+          console.log('Auto-refresh failed:', error.message)
         }
       }
-      fetchNews()
-    }, 120000) // Refresh every 2 minutes
+      fetchLatestNews()
+    }, 180000) // Refresh every 3 minutes
 
     return () => clearInterval(refreshInterval)
   }, [])
