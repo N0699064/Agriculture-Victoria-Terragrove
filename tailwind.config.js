@@ -7,6 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backdropBlur: {
+        xs: '2px',
+      },
+      backdropFilter: {
+        'none': 'none',
+        'blur': 'blur(20px)',
+      },
       colors: {
         primary: {
           50: '#ecfccb',
